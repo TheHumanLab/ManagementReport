@@ -1,24 +1,22 @@
 {
   "weekEnding": "26 JUNE 2026",
   "kpis": [
-    {"l":"REVENUE","v":"TZS 1.45M","c":"▲ 24%","t":"up"}
-  ]
-}
+    {
       "label": "REVENUE",
-      "value": "TZS 1.17M",
-      "change": "\u25b2 143.8%",
+      "value": "TZS 1.45M",
+      "change": "▲ 24%",
       "changeType": "positive"
     },
     {
       "label": "COLLECTIONS",
       "value": "N/A",
-      "change": "\u2014",
+      "change": "—",
       "changeType": "neutral"
     },
     {
       "label": "PIPELINE VALUE",
       "value": "N/A",
-      "change": "\u2014",
+      "change": "—",
       "changeType": "neutral"
     },
     {
@@ -30,13 +28,13 @@
     {
       "label": "NEW CLIENTS",
       "value": "N/A",
-      "change": "\u2014",
+      "change": "—",
       "changeType": "neutral"
     },
     {
       "label": "PROJECTS ON TRACK",
       "value": "4",
-      "change": "\u25b2 1",
+      "change": "▲ 1",
       "changeType": "positive"
     },
     {
@@ -53,32 +51,12 @@
     }
   ],
   "revenueTrend": {
-    "labels": [
-      "May Wk 3",
-      "May Wk 4",
-      "Jun Wk 1",
-      "Jun Wk 2"
-    ],
-    "data": [
-      0.42,
-      0.39,
-      0.48,
-      1.17
-    ]
+    "labels": ["May Wk 3", "May Wk 4", "Jun Wk 1", "Jun Wk 2"],
+    "data": [0.42, 0.39, 0.48, 1.45]
   },
   "collectionsTrend": {
-    "labels": [
-      "May Wk 3",
-      "May Wk 4",
-      "Jun Wk 1",
-      "Jun Wk 2"
-    ],
-    "data": [
-      0.6,
-      0.6,
-      0.6,
-      0.6
-    ]
+    "labels": ["May Wk 3", "May Wk 4", "Jun Wk 1", "Jun Wk 2"],
+    "data": [0.6, 0.6, 0.6, 0.6]
   },
   "outstandingReceivables": "N/A",
   "pipeline": {
@@ -132,7 +110,7 @@
     }
   ],
   "summary": {
-    "financial": "Sales increased 144% week-on-week to TZS 1.17M. Audits are nearing completion with tax clearance pending final audit outputs.",
+    "financial": "Revenue grew to TZS 1.45M (+24% WoW). Collections steady. Audit nearing completion.",
     "commercial": "Strong sales momentum driven by repeat customers. Institutional opportunities emerging. Commercial infrastructure remains a constraint.",
     "operational": "Odoo implementation progressing; NHIF approved and advancing. Audit completion and licence renewal remain top operational priorities."
   }
