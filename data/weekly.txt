@@ -1,6 +1,6 @@
 WEEK=26 JUNE 2026
 FINANCE=TZS 1.45M|+24%|Revenue beat forecast, collections strong
-COMMERCIAL=TZS 27.2M|+3|3 proposals in negotiation
-LEGAL=Audit 90%|On track|Tax clearance pending final sign-off
-OPERATIONS=4 of 6|67% on track|Odoo at 60%, NHIF approved
-CEO=2 decisions|Urgent|Licence renewal + senior hire approval
+COMMERCIAL=TZS 27.2M|+3 new|3 proposals in negotiation
+LEGAL=Audit 90%|On track|Tax clearance pending final docs
+OPERATIONS=4/6 projects|67% on track|Odoo implementation at 60%
+CEO=2 decisions|Urgent|Licence renewal and senior hire approval
