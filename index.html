@@ -2,123 +2,64 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MRH GROUP - Weekly Executive Dashboard</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MRH GROUP — Executive Dashboard</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',system-ui,sans-serif;background:#fff;color:#0f172a}
-.dashboard{max-width:1440px;margin:0 auto;padding:28px 32px}
-.topbar{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:22px}
-.brand h1{font-size:34px;font-weight:800;color:#0a2342}.brand .sub{font-size:13px;font-weight:700;color:#0f7173;letter-spacing:1.2px;margin-top:6px}
-.date{display:flex;align-items:center;gap:8px;font-size:13.5px;color:#334155;background:#f8fafc;border:1px solid #e2e8f0;padding:8px 14px;border-radius:10px}
-.kpis{display:grid;grid-template-columns:repeat(8,1fr);gap:14px;margin-bottom:24px}
-.kpi{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
-.icon-circle{width:38px;height:38px;background:#0a2342;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
-.kpi-label{font-size:10.5px;font-weight:700;color:#64748b;letter-spacing:.6px;text-transform:uppercase}
-.kpi-value{font-size:24px;font-weight:800;color:#0a2342;margin:6px 0 4px}
-.kpi-change{font-size:12px;font-weight:600}.up{color:#059669}.neutral{color:#64748b}
-.performance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:22px}
-.perf-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden}
-.perf-header{background:#0a2342;color:#fff;padding:10px 16px;font-size:12.5px;font-weight:700;letter-spacing:.5px}
-.perf-header.teal{background:#0f7173}.perf-body{padding:16px}
-.chart-wrap{height:118px;position:relative}.funnel{display:flex;flex-direction:column;gap:9px}
-.funnel-bar{height:38px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;color:#fff;font-weight:600;font-size:13px}
-.f1{background:#0a2342}.f2{background:#153a67;width:88%}.f3{background:#0f7173;width:70%}.f4{background:#2aa1a3;width:52%}
-.risk-section{background:#fff;border:1px solid #e2e8f0;border-radius:14px;margin-bottom:22px;overflow:hidden}
-.risk-header{background:#0a2342;color:#fff;padding:11px 16px;font-size:12.5px;font-weight:700}
-.risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#e2e8f0}
-.risk-card{background:#fff;padding:16px}
-.summary-section{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden}
-.summary-tab{background:#0a2342;color:#fff;display:inline-block;padding:9px 16px;font-size:12.5px;font-weight:700}
-.summary-body{padding:18px 20px}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
-@media(max-width:1200px){.kpis{grid-template-columns:repeat(4,1fr)}.performance-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.performance-grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}}
+  :root{--navy:#0a2342;--teal:#0f7173;--ink:#0f172a;--muted:#475569;--line:#e2e8f0;--bg:#ffffff;--amber:#b45309}
+  *{box-sizing:border-box} html,body{height:100%}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+  header{background:var(--navy);color:#fff;position:sticky;top:0;z-index:10}
+ .wrap{max-width:1160px;margin:0 auto;padding:24px}
+ .head{display:flex;align-items:center;justify-content:space-between;gap:16px}
+ .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.4px}
+ .brand-mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--teal),#14919b);display:grid;place-items:center;font-weight:900}
+ .week{text-align:right}.week-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;opacity:.8}
+ .week-value{font-size:1.6rem;font-weight:700;line-height:1.1;margin-top:2px}
+ .status{margin-top:6px;font-size:.78rem;color:#b9e1e2;display:flex;align-items:center;justify-content:flex-end;gap:6px}
+ .dot{width:8px;height:8px;border-radius:50%;background:#22d3ee;animation:pulse 1.8s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,211,238,.6)}70%{box-shadow:0 0 0 8px rgba(34,211,238,0)}100%{box-shadow:0 0 0 0 rgba(34,211,238,0)}}
+  main{padding:28px 24px 48px}
+ .grid{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
+ .card{grid-column:span 12;background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 1px 2px rgba(10,35,66,.04);transition:.18s}
+ .card:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(10,35,66,.08)}
+ .title{color:var(--navy);font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+ .value{font-size:2.1rem;font-weight:800;margin:10px 0}
+ .pill{display:inline-flex;align-items:center;gap:6px;background:var(--teal);color:#fff;font-weight:700;font-size:.82rem;padding:6px 12px;border-radius:999px;margin-bottom:10px}
+ .pill.warning{background:var(--amber)}.pill.neutral{background:#64748b}
+ .note{color:var(--muted);font-size:.96rem;line-height:1.45}
+  @media(min-width:720px){.card{grid-column:span 6}}
+  @media(min-width:1024px){.card{grid-column:span 4}.card:nth-child(4),.card:nth-child(5){grid-column:span 6}}
+  footer{max-width:1160px;margin:0 auto;padding:0 24px 40px;color:#64748b;font-size:.8rem}
 </style>
 </head>
 <body>
-<div class="dashboard">
-<header class="topbar">
-<div class="brand"><h1>MRH GROUP</h1><div class="sub">WEEKLY EXECUTIVE DASHBOARD</div></div>
-<div class="date" id="weekDate">Week Ending 19 JUNE 2026</div>
-</header>
+<header><div class="wrap head">
+  <div class="brand"><div class="brand-mark">M</div><span>MRH GROUP</span></div>
+  <div class="week"><div class="week-label">Executive Week</div><div class="week-value" id="week">—</div><div class="status"><span class="dot"></span><span id="status">updating…</span></div></div>
+</div></header>
 
-<section class="kpis" id="kpiGrid"></section>
+<main><div class="grid">
+  <article class="card"><div class="title">Finance</div><div class="value" id="finance-value">—</div><div class="pill" id="finance-change">—</div><div class="note" id="finance-note">—</div></article>
+  <article class="card"><div class="title">Commercial</div><div class="value" id="commercial-value">—</div><div class="pill" id="commercial-change">—</div><div class="note" id="commercial-note">—</div></article>
+  <article class="card"><div class="title">Legal & Compliance</div><div class="value" id="legal-value">—</div><div class="pill" id="legal-change">—</div><div class="note" id="legal-note">—</div></article>
+  <article class="card"><div class="title">Operations</div><div class="value" id="operations-value">—</div><div class="pill" id="operations-change">—</div><div class="note" id="operations-note">—</div></article>
+  <article class="card"><div class="title">Office of CEO</div><div class="value" id="ceo-value">—</div><div class="pill" id="ceo-change">—</div><div class="note" id="ceo-note">—</div></article>
+</div></main>
 
-<section class="performance-grid">
-<article class="perf-card"><div class="perf-header">FINANCIAL PERFORMANCE</div><div class="perf-body">
-<div style="font-size:12px;font-weight:600;margin-bottom:6px">Revenue Trend (TZS)</div><div class="chart-wrap"><canvas id="rev"></canvas></div>
-<div style="font-size:12px;font-weight:600;margin:16px 0 6px">Collections Trend</div><div class="chart-wrap"><canvas id="col"></canvas></div>
-</div></article>
-
-<article class="perf-card"><div class="perf-header teal">COMMERCIAL PERFORMANCE</div><div class="perf-body">
-<div style="font-size:12px;font-weight:600;margin-bottom:10px">Sales Pipeline (Value)</div>
-<div class="funnel">
-<div class="funnel-bar f1"><span>Prospects</span><span>15.0M</span></div>
-<div class="funnel-bar f2"><span>Qualified</span><span>7.8M</span></div>
-<div class="funnel-bar f3"><span>Proposal</span><span>3.2M</span></div>
-<div class="funnel-bar f4"><span>Negotiation</span><span>1.2M</span></div>
-</div>
-</div></article>
-
-<article class="perf-card"><div class="perf-header">OPERATIONAL PERFORMANCE</div><div class="perf-body">
-<div style="font-size:12px;font-weight:600;margin-bottom:10px">Project Status</div>
-<div class="chart-wrap"><canvas id="proj"></canvas></div>
-</div></article>
-</section>
-
-<section class="risk-section"><div class="risk-header">EXECUTIVE RISK DASHBOARD</div><div class="risk-grid" id="riskGrid"></div></section>
-
-<section class="summary-section"><div class="summary-tab">EXECUTIVE SUMMARY</div><div class="summary-body"><div class="summary-grid" id="summaryGrid"></div></div></section>
-</div>
+<footer><div>Source:./data/weekly.txt • Update this one file weekly</div></footer>
 
 <script>
-// ===== EMBEDDED DATA - WORKS WITHOUT ANY FILES =====
-const DATA = {
-  week: "19 JUNE 2026",
-  kpis: [
-    {l:"REVENUE",v:"TZS 1.17M",c:"▲ 143.8%",t:"up"},
-    {l:"COLLECTIONS",v:"N/A",c:"—",t:"neutral"},
-    {l:"PIPELINE VALUE",v:"N/A",c:"—",t:"neutral"},
-    {l:"NEW OPPORTUNITIES",v:"1",c:"No Change",t:"neutral"},
-    {l:"NEW CLIENTS",v:"N/A",c:"—",t:"neutral"},
-    {l:"PROJECTS ON TRACK",v:"4",c:"▲ 1",t:"up"},
-    {l:"EMPLOYEE HEADCOUNT",v:"18",c:"No Change",t:"neutral"},
-    {l:"REPORT COMPLIANCE",v:"100%",c:"No Change",t:"neutral"}
-  ],
-  rev: [0.42,0.39,0.48,1.17],
-  col: [0.6,0.6,0.6],
-  proj: [4,1,1],
-  risks: [
-    {t:"COMMERCIAL CAPACITY",s:"MONITORING",d:"Infrastructure gaps limiting commercial scalability"},
-    {t:"AUDIT DEPENDENCY",s:"REQUIRES ATTENTION",d:"Audit completion critical for compliance and licence"},
-    {t:"FOUNDER DEPENDENCY",s:"MONITORING",d:"Key initiatives remain founder-dependent"},
-    {t:"REPORTING COMPLIANCE",s:"STABLE",d:"Reporting submissions 100% compliant"},
-    {t:"TECHNOLOGY GOVERNANCE",s:"MONITORING",d:"Odoo implementation progressing internal configuration"}
-  ],
-  sum: [
-    {h:"FINANCIAL POSITION",p:"Sales increased 144% week-on-week to TZS 1.17M. Audits are nearing completion with tax clearance pending final audit outputs."},
-    {h:"COMMERCIAL POSITION",p:"Strong sales momentum driven by repeat customers. Institutional opportunities emerging. Commercial infrastructure remains a constraint."},
-    {h:"OPERATIONAL POSITION",p:"Odoo implementation progressing; NHIF approved and advancing. Audit completion and licence renewal remain top operational priorities."}
-  ]
-};
+const DEFAULT=`WEEK=19 JUNE 2026
+FINANCE=TZS 1.17M|+143.8%|Sales up, audit nearing completion
+COMMERCIAL=TZS 15.0M pipeline|+1 new|3 proposals in negotiation
+LEGAL=Audit 75%|On track|Tax clearance pending
+OPERATIONS=4/6 projects|67% on track|Odoo at 60%
+CEO=2 decisions|Urgent|Licence renewal & hire`;
 
-function render(d){
-  document.getElementById('weekDate').textContent = 'Week Ending '+d.week;
-  document.getElementById('kpiGrid').innerHTML = d.kpis.map(k=>`
-    <div class="kpi"><div class="icon-circle"></div><div class="kpi-label">${k.l}</div>
-    <div class="kpi-value">${k.v}</div><div class="kpi-change ${k.t}">${k.c}</div></div>`).join('');
-  document.getElementById('riskGrid').innerHTML = d.risks.map(r=>`<div class="risk-card"><div style="font-size:11.5px;font-weight:800;color:#0a2342">${r.t} • ${r.s}</div><div style="font-size:13px;color:#475569;margin-top:4px">${r.d}</div></div>`).join('');
-  document.getElementById('summaryGrid').innerHTML = d.sum.map(s=>`<div><h4 style="font-size:11.5px;font-weight:800;color:#0f7173;margin-bottom:8px">${s.h}</h4><p style="font-size:13.4px;color:#334155;line-height:1.6">${s.p}</p></div>`).join('');
-
-  new Chart(document.getElementById('rev'),{type:'line',data:{labels:['May Wk3','May Wk4','Jun Wk1','Jun Wk2'],datasets:[{data:d.rev,borderColor:'#0a2342',borderWidth:2.5,tension:.35,pointRadius:4}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}});
-  new Chart(document.getElementById('col'),{type:'line',data:{labels:['May Wk3','May Wk4','Jun Wk1','Jun Wk2'],datasets:[{data:d.col,borderColor:'#0f7173',borderWidth:2}]},options:{plugins:{legend:{display:false}}}});
-  new Chart(document.getElementById('proj'),{type:'doughnut',data:{labels:['On Track','At Risk','Delayed'],datasets:[{data:d.proj,backgroundColor:['#10b981','#f59e0b','#ef4444']}]},options:{plugins:{legend:{position:'right'}},cutout:'65%'}});
-}
-
-// Try to load external data, but ALWAYS render something
-render(DATA);
-fetch('./data/current.json?'+Date.now()).then(r=>r.ok?r.json():null).then(j=>{if(j){DATA.week=j.weekEnding||DATA.week;render(DATA)}}).catch(()=>{});
+function parse(t){const o={};t.split(/\r?\n/).forEach(l=>{if(!l||l.startsWith('#'))return;const i=l.indexOf('=');if(i<0)return;const k=l.slice(0,i).trim().toUpperCase();const p=l.slice(i+1).split('|');o[k]={value:p[0]?.trim()||'',change:p[1]?.trim()||'',note:p[2]?.trim()||''}});return o}
+function set(id,v,c,n){document.getElementById(id+'-value').textContent=v;const p=document.getElementById(id+'-change');p.textContent=c;p.className='pill '+(c.includes('Urgent')||c.includes('Risk')?'warning':c.includes('+')||c.includes('track')?'':'neutral');document.getElementById(id+'-note').textContent=n}
+async function load(){try{const r=await fetch('./data/weekly.txt?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw'';const d=parse(await r.text());document.getElementById('week').textContent=d.WEEK?.value||'—';set('finance',d.FINANCE.value,d.FINANCE.change,d.FINANCE.note);set('commercial',d.COMMERCIAL.value,d.COMMERCIAL.change,d.COMMERCIAL.note);set('legal',d.LEGAL.value,d.LEGAL.change,d.LEGAL.note);set('operations',d.OPERATIONS.value,d.OPERATIONS.change,d.OPERATIONS.note);set('ceo',d.CEO.value,d.CEO.change,d.CEO.note);document.getElementById('status').textContent='live'}catch(e){const d=parse(DEFAULT);document.getElementById('week').textContent=d.WEEK.value;set('finance',d.FINANCE.value,d.FINANCE.change,d.FINANCE.note);set('commercial',d.COMMERCIAL.value,d.COMMERCIAL.change,d.COMMERCIAL.note);set('legal',d.LEGAL.value,d.LEGAL.change,d.LEGAL.note);set('operations',d.OPERATIONS.value,d.OPERATIONS.change,d.OPERATIONS.note);set('ceo',d.CEO.value,d.CEO.change,d.CEO.note);document.getElementById('status').textContent='offline • showing default'}}
+document.addEventListener('DOMContentLoaded',load);
 </script>
 </body>
 </html>
