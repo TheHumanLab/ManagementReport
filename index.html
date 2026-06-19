@@ -1,140 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MRH GROUP - Executive Dashboard</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MRH GROUP - Weekly Executive Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-* {margin:0;padding:0;box-sizing:border-box}
-:root{--navy:#0a2342;--navy-2:#132f52;--teal:#0f7173;--teal-light:#17a2a5;--bg:#ffffff;--gray-50:#f8fafc;--gray-100:#f1f5f9;--gray-200:#e2e8f0;--gray-500:#64748b;--gray-700:#334155;--green:#10b981;--amber:#f59e0b;--red:#ef4444}
-body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:var(--bg);color:var(--navy);line-height:1.5;-webkit-font-smoothing:antialiased}
-.loading{position:fixed;inset:0;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-2) 100%);display:flex;align-items:center;justify-content:center;z-index:9999;transition:opacity.3s}
-.loading-content{text-align:center;color:white}
-.spinner{width:48px;height:48px;border:3px solid rgba(255,255,255,.2);border-top-color:var(--teal-light);border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 1rem}
-@keyframes spin{to{transform:rotate(360deg)}}
-header{background:linear-gradient(135deg,var(--navy) 0%,#0d3259 100%);color:white;padding:1.25rem 1.5rem;position:sticky;top:0;z-index:40;box-shadow:0 4px 12px rgba(10,35,66,.15)}
-.header-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:1rem}
-.brand{display:flex;align-items:center;gap:.875rem}
-.logo{width:44px;height:44px;background:var(--teal);border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.1rem;box-shadow:0 4px 12px rgba(15,113,115,.3)}
-.brand h1{font-size:1.25rem;font-weight:700;letter-spacing:.5px;line-height:1.1}
-.brand p{font-size:.75rem;opacity:.8;margin-top:2px}
-.week{text-align:right}
-.week span{display:block;font-size:.7rem;opacity:.7;text-transform:uppercase;letter-spacing:.5px}
-.week strong{font-size:1.1rem;font-weight:600;margin-top:2px;display:block}
-.live{display:inline-flex;align-items:center;gap:.35rem;margin-top:.35rem;font-size:.7rem;background:rgba(15,113,115,.3);padding:.25rem.6rem;border-radius:20px;border:1px solid rgba(23,162,165,.4)}
-.dot{width:6px;height:6px;background:#22d3ee;border-radius:50%;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-.container{max-width:1400px;margin:0 auto;padding:1.5rem}
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem}
-.kpi-card{background:white;border:1px solid var(--gray-200);border-radius:14px;padding:1.1rem 1.25rem;transition:all.2s;position:relative;overflow:hidden}
-.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--teal-light));opacity:0;transition:opacity.2s}
-.kpi-card:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(10,35,66,.08);border-color:var(--teal-light)}
-.kpi-card:hover::before{opacity:1}
-.kpi-label{font-size:.8rem;color:var(--gray-500);font-weight:500;margin-bottom:.35rem}
-.kpi-value{font-size:1.75rem;font-weight:700;color:var(--navy);line-height:1.1;letter-spacing:-.5px}
-.kpi-change{display:inline-flex;align-items:center;gap:.25rem;margin-top:.5rem;font-size:.8rem;font-weight:600;padding:.2rem.55rem;border-radius:6px}
-.kpi-change.positive{background:rgba(16,185,129,.1);color:#047857}
-.kpi-change.negative{background:rgba(239,68,68,.1);color:#b91c1c}
-.kpi-change.neutral{background:var(--gray-100);color:var(--gray-700)}
-.performance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:1.5rem}
-.card{background:white;border:1px solid var(--gray-200);border-radius:16px;padding:1.25rem;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.card h3{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
-.card h3::before{content:'';width:4px;height:18px;background:var(--teal);border-radius:2px}
-.chart-wrap{position:relative;height:200px;margin-bottom:1rem}
-.chart-wrap.small{height:140px}
-.stat-row{display:flex;justify-content:space-between;align-items:center;padding:.75rem;background:var(--gray-50);border-radius:10px;margin-top:.75rem;font-size:.875rem}
-.stat-row strong{font-size:1.1rem;color:var(--navy)}
-.pipeline-list{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1rem}
-.pipe-item{display:flex;justify-content:space-between;align-items:center;padding:.6rem.75rem;background:var(--gray-50);border-radius:8px;border-left:3px solid var(--teal)}
-.pipe-item span{font-size:.85rem;color:var(--gray-700)}
-.pipe-item strong{font-weight:700;color:var(--navy)}
-.metrics{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:1rem}
-.metrics > div{background:var(--gray-50);padding:.75rem;border-radius:10px;text-align:center}
-.metrics span{display:block;font-size:.7rem;color:var(--gray-500);text-transform:uppercase;letter-spacing:.3px;margin-bottom:.25rem}
-.metrics strong{display:block;font-size:1.3rem;font-weight:700;color:var(--navy)}
-.metrics small{font-size:.7rem;color:var(--gray-500)}
-.status-legend{display:flex;justify-content:space-around;margin:.75rem 0;font-size:.8rem;flex-wrap:wrap;gap:.5rem}
-.legend-item{display:flex;align-items:center;gap:.4rem}
-.legend-dot{width:10px;height:10px;border-radius:50%}
-.risk-card{margin-bottom:1.5rem}
-.risk-table-wrapper{overflow-x:auto;-webkit-overflow-scrolling:touch}
-table{width:100%;border-collapse:separate;border-spacing:0;font-size:.875rem;min-width:600px}
-th{text-align:left;padding:.75rem 1rem;background:var(--gray-50);font-weight:600;color:var(--gray-700);font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;border-bottom:1px solid var(--gray-200);white-space:nowrap}
-th:first-child{border-top-left-radius:8px}
-th:last-child{border-top-right-radius:8px}
-td{padding:.9rem 1rem;border-bottom:1px solid var(--gray-100);vertical-align:top}
-tr:last-child td{border-bottom:none}
-tr:hover td{background:var(--gray-50)}
-.risk-level{display:inline-flex;padding:.25rem.6rem;border-radius:20px;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
-.risk-level.high{background:rgba(239,68,68,.12);color:#b91c1c}
-.risk-level.medium{background:rgba(245,158,11,.12);color:#b45309}
-.risk-level.low{background:rgba(16,185,129,.12);color:#047857}
-.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem}
-.summary h4{font-size:.95rem;font-weight:700;margin-bottom:.6rem;color:var(--navy);display:flex;align-items:center;gap:.5rem}
-.summary h4::before{content:'';width:3px;height:16px;background:var(--teal);border-radius:2px}
-.summary p{font-size:.875rem;color:var(--gray-700);line-height:1.6}
-footer{text-align:center;padding:2rem 1rem;color:var(--gray-500);font-size:.75rem}
-@media(max-width:1100px){.kpi-grid{grid-template-columns:repeat(2,1fr)}.performance-grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}}
-@media(max-width:640px){.container{padding:1rem}header{padding:1rem}.header-inner{flex-wrap:wrap}.kpi-grid{grid-template-columns:1fr 1fr;gap:.75rem}.kpi-card{padding:.9rem}.kpi-value{font-size:1.4rem}.card{padding:1rem}.week{text-align:left;width:100%;display:flex;align-items:center;justify-content:space-between;margin-top:.75rem;padding-top:.75rem;border-top:1px solid rgba(255,255,255,.1)}table{min-width:100%;font-size:.8rem}th,td{padding:.65rem.75rem;white-space:normal}}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Inter',system-ui,sans-serif;background:#fff;color:#0f172a}
+.dashboard{max-width:1440px;margin:0 auto;padding:28px 32px}
+.topbar{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:22px}
+.brand h1{font-size:34px;font-weight:800;color:#0a2342}.brand .sub{font-size:13px;font-weight:700;color:#0f7173;letter-spacing:1.2px;margin-top:6px}
+.date{display:flex;align-items:center;gap:8px;font-size:13.5px;color:#334155;background:#f8fafc;border:1px solid #e2e8f0;padding:8px 14px;border-radius:10px}
+.kpis{display:grid;grid-template-columns:repeat(8,1fr);gap:14px;margin-bottom:24px}
+.kpi{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:16px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.icon-circle{width:38px;height:38px;background:#0a2342;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.kpi-label{font-size:10.5px;font-weight:700;color:#64748b;letter-spacing:.6px;text-transform:uppercase}
+.kpi-value{font-size:24px;font-weight:800;color:#0a2342;margin:6px 0 4px}
+.kpi-change{font-size:12px;font-weight:600}.up{color:#059669}.neutral{color:#64748b}
+.performance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:22px}
+.perf-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden}
+.perf-header{background:#0a2342;color:#fff;padding:10px 16px;font-size:12.5px;font-weight:700;letter-spacing:.5px}
+.perf-header.teal{background:#0f7173}.perf-body{padding:16px}
+.chart-wrap{height:118px;position:relative}.funnel{display:flex;flex-direction:column;gap:9px}
+.funnel-bar{height:38px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;color:#fff;font-weight:600;font-size:13px}
+.f1{background:#0a2342}.f2{background:#153a67;width:88%}.f3{background:#0f7173;width:70%}.f4{background:#2aa1a3;width:52%}
+.risk-section{background:#fff;border:1px solid #e2e8f0;border-radius:14px;margin-bottom:22px;overflow:hidden}
+.risk-header{background:#0a2342;color:#fff;padding:11px 16px;font-size:12.5px;font-weight:700}
+.risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#e2e8f0}
+.risk-card{background:#fff;padding:16px}
+.summary-section{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden}
+.summary-tab{background:#0a2342;color:#fff;display:inline-block;padding:9px 16px;font-size:12.5px;font-weight:700}
+.summary-body{padding:18px 20px}.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+@media(max-width:1200px){.kpis{grid-template-columns:repeat(4,1fr)}.performance-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.performance-grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<!--
-MRH GROUP - WEEKLY DATA UPDATE INSTRUCTIONS
-
-1. Each week, create/update the file: /data/current.json
-2. Structure must match the defaultData object in the script below
-3. Required fields:
-   - weekEnding (e.g., "26 JUNE 2026")
-   - kpis[8] {label, value, change, changeType: "positive|negative|neutral"}
-   - revenueTrend {labels[], data[]}
-   - collectionsTrend {labels[], data[]}
-   - outstandingReceivables (number in thousands)
-   - pipeline {prospects, qualified, proposal, negotiation}
-   - conversionRate, conversionChange, newOpportunities
-   - projectStatus {onTrack, atRisk, delayed}
-   - odooPercent, deliverables, deliverablesChange
-   - risks[] {title, level, probability, impact, owner, mitigation}
-   - summary {financial, commercial, operational}
-4. Save and deploy. Dashboard auto-fetches './data/current.json' on load
-5. If fetch fails (local file), dashboard falls back to embedded data for 19 JUNE 2026
--->
-
-<div id="loading" class="loading">
-  <div class="loading-content">
-    <div class="spinner"></div>
-    <div style="font-weight:600;letter-spacing:.5px">Loading Executive Data</div>
-    <div style="font-size:.8rem;opacity:.7;margin-top:.25rem">MRH GROUP</div>
-  </div>
-</div>
-
-<header>
-  <div class="header-inner">
-    <div class="brand">
-      <div class="logo">MRH</div>
-      <div>
-        <h1>MRH GROUP</h1>
-        <p>Executive Performance Dashboard</p>
-      </div>
-    </div>
-    <div class="week">
-      <div>
-        <span>Week Ending</span>
-        <strong id="weekEnding">—</strong>
-      </div>
-      <div class="live"><span class="dot"></span>LIVE</div>
-    </div>
-  </div>
+<div class="dashboard">
+<header class="topbar">
+<div class="brand"><h1>MRH GROUP</h1><div class="sub">WEEKLY EXECUTIVE DASHBOARD</div></div>
+<div class="date" id="weekDate">Week Ending 19 JUNE 2026</div>
 </header>
 
-<main class="container">
-  <section id="kpis" class="kpi-grid"></section>
+<section class="kpis" id="kpiGrid"></section>
 
-  <section class="performance-grid">
-    <div class="card">
-      <h3>Financial Performance</h3>
-      <div class="chart-wrap"><canvas id="revenueChart"></canvas></div>
+<section class="performance-grid">
+<article class="perf-card"><div class="perf-header">FINANCIAL PERFORMANCE</div><div class="perf-body">
+<div style="font-size:12px;font-weight:600;margin-bottom:6px">Revenue Trend (TZS)</div><div class="chart-wrap"><canvas id="rev"></canvas></div>
+<div style="font-size:12px;font-weight:600;margin:16px 0 6px">Collections Trend</div><div class="chart-wrap"><canvas id="col"></canvas></div>
+</div></article>
+
+<article class="perf-card"><div class="perf-header teal">COMMERCIAL PERFORMANCE</div><div class="perf-body">
+<div style="font-size:12px;font-weight:600;margin-bottom:10px">Sales Pipeline (Value)</div>
+<div class="funnel">
+<div class="funnel-bar f1"><span>Prospects</span><span>15.0M</span></div>
+<div class="funnel-bar f2"><span>Qualified</span><span>7.8M</span></div>
+<div class="funnel-bar f3"><span>Proposal</span><span>3.2M</span></div>
+<div class="funnel-bar f4"><span>Negotiation</span><span>1.2M</span></div>
+</div>
+</div></article>
+
+<article class="perf-card"><div class="perf-header">OPERATIONAL PERFORMANCE</div><div class="perf-body">
+<div style="font-size:12px;font-weight:600;margin-bottom:10px">Project Status</div>
+<div class="chart-wrap"><canvas id="proj"></canvas></div>
+</div></article>
+</section>
+
+<section class="risk-section"><div class="risk-header">EXECUTIVE RISK DASHBOARD</div><div class="risk-grid" id="riskGrid"></div></section>
+
+<section class="summary-section"><div class="summary-tab">EXECUTIVE SUMMARY</div><div class="summary-body"><div class="summary-grid" id="summaryGrid"></div></div></section>
+</div>
+
+<script>
+// ===== EMBEDDED DATA - WORKS WITHOUT ANY FILES =====
+const DATA = {
+  week: "19 JUNE 2026",
+  kpis: [
+    {l:"REVENUE",v:"TZS 1.17M",c:"▲ 143.8%",t:"up"},
+    {l:"COLLECTIONS",v:"N/A",c:"—",t:"neutral"},
+    {l:"PIPELINE VALUE",v:"N/A",c:"—",t:"neutral"},
+    {l:"NEW OPPORTUNITIES",v:"1",c:"No Change",t:"neutral"},
+    {l:"NEW CLIENTS",v:"N/A",c:"—",t:"neutral"},
+    {l:"PROJECTS ON TRACK",v:"4",c:"▲ 1",t:"up"},
+    {l:"EMPLOYEE HEADCOUNT",v:"18",c:"No Change",t:"neutral"},
+    {l:"REPORT COMPLIANCE",v:"100%",c:"No Change",t:"neutral"}
+  ],
+  rev: [0.42,0.39,0.48,1.17],
+  col: [0.6,0.6,0.6],
+  proj: [4,1,1],
+  risks: [
+    {t:"COMMERCIAL CAPACITY",s:"MONITORING",d:"Infrastructure gaps limiting commercial scalability"},
+    {t:"AUDIT DEPENDENCY",s:"REQUIRES ATTENTION",d:"Audit completion critical for compliance and licence"},
+    {t:"FOUNDER DEPENDENCY",s:"MONITORING",d:"Key initiatives remain founder-dependent"},
+    {t:"REPORTING COMPLIANCE",s:"STABLE",d:"Reporting submissions 100% compliant"},
+    {t:"TECHNOLOGY GOVERNANCE",s:"MONITORING",d:"Odoo implementation progressing internal configuration"}
+  ],
+  sum: [
+    {h:"FINANCIAL POSITION",p:"Sales increased 144% week-on-week to TZS 1.17M. Audits are nearing completion with tax clearance pending final audit outputs."},
+    {h:"COMMERCIAL POSITION",p:"Strong sales momentum driven by repeat customers. Institutional opportunities emerging. Commercial infrastructure remains a constraint."},
+    {h:"OPERATIONAL POSITION",p:"Odoo implementation progressing; NHIF approved and advancing. Audit completion and licence renewal remain top operational priorities."}
+  ]
+};
+
+function render(d){
+  document.getElementById('weekDate').textContent = 'Week Ending '+d.week;
+  document.getElementById('kpiGrid').innerHTML = d.kpis.map(k=>`
+    <div class="kpi"><div class="icon-circle"></div><div class="kpi-label">${k.l}</div>
+    <div class="kpi-value">${k.v}</div><div class="kpi-change ${k.t}">${k.c}</div></div>`).join('');
+  document.getElementById('riskGrid').innerHTML = d.risks.map(r=>`<div class="risk-card"><div style="font-size:11.5px;font-weight:800;color:#0a2342">${r.t} • ${r.s}</div><div style="font-size:13px;color:#475569;margin-top:4px">${r.d}</div></div>`).join('');
+  document.getElementById('summaryGrid').innerHTML = d.sum.map(s=>`<div><h4 style="font-size:11.5px;font-weight:800;color:#0f7173;margin-bottom:8px">${s.h}</h4><p style="font-size:13.4px;color:#334155;line-height:1.6">${s.p}</p></div>`).join('');
+
+  new Chart(document.getElementById('rev'),{type:'line',data:{labels:['May Wk3','May Wk4','Jun Wk1','Jun Wk2'],datasets:[{data:d.rev,borderColor:'#0a2342',borderWidth:2.5,tension:.35,pointRadius:4}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true}}});
+  new Chart(document.getElementById('col'),{type:'line',data:{labels:['May Wk3','May Wk4','Jun Wk1','Jun Wk2'],datasets:[{data:d.col,borderColor:'#0f7173',borderWidth:2}]},options:{plugins:{legend:{display:false}}}});
+  new Chart(document.getElementById('proj'),{type:'doughnut',data:{labels:['On Track','At Risk','Delayed'],datasets:[{data:d.proj,backgroundColor:['#10b981','#f59e0b','#ef4444']}]},options:{plugins:{legend:{position:'right'}},cutout:'65%'}});
+}
+
+// Try to load external data, but ALWAYS render something
+render(DATA);
+fetch('./data/current.json?'+Date.now()).then(r=>r.ok?r.json():null).then(j=>{if(j){DATA.week=j.weekEnding||DATA.week;render(DATA)}}).catch(()=>{});
+</script>
+</body>
+</html>
