@@ -1,203 +1,410 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="noindex, nofollow">
-<title>MICHELLE REGINATA HOLDINGS LTD | Executive Brief</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MRH GROUP - Weekly Executive Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
-    :root { --navy:#0B0E14; --navy-light:#151921; --gold:#D4AF37; --text:#FFFFFF; --text-muted:#9CA3AF; }
-    * { font-family: 'Inter', sans-serif; }
-    body { background-color: var(--navy); color: var(--text); }
- .gradient-border { position: relative; background: linear-gradient(135deg, var(--navy-light), #1D222E); border: 1px solid rgba(212,175,55,0.15); }
- .btn-gold { background: linear-gradient(135deg, var(--gold), #E5C96B); color: var(--navy); transition: all 0.3s ease; }
- .btn-gold:hover { transform: translateY(-1px); }
- .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 50; align-items: center; justify-content: center; padding: 1rem; }
- .modal.show { display: flex; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
- .fade-in { animation: fadeIn 0.4s ease-out; }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    background:#ffffff;
+    color:#0f172a;
+    -webkit-font-smoothing:antialiased;
+  }
+ .dashboard{max-width:1440px;margin:0 auto;padding:28px 32px 48px}
+ .topbar{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:22px}
+ .brand h1{font-size:34px;font-weight:800;color:#0a2342;letter-spacing:-0.3px;line-height:1}
+ .brand.sub{font-size:13px;font-weight:700;color:#0f7173;letter-spacing:1.2px;margin-top:6px}
+ .date{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;color:#334155;background:#f8fafc;border:1px solid #e2e8f0;padding:8px 14px;border-radius:10px}
+
+ .kpis{display:grid;grid-template-columns:repeat(8,1fr);gap:14px;margin-bottom:24px}
+ .kpi{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:16px 16px 14px;box-shadow:0 1px 2px rgba(15,23,42,.04);position:relative}
+ .icon-circle{width:38px;height:38px;background:#0a2342;border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:12px;box-shadow:0 2px 6px rgba(10,35,66,.18)}
+ .kpi-label{font-size:10.5px;font-weight:700;color:#64748b;letter-spacing:.6px;text-transform:uppercase}
+ .kpi-value{font-size:24px;font-weight:800;color:#0a2342;margin:6px 0 4px;letter-spacing:-.2px}
+ .kpi-change{font-size:12px;font-weight:600;display:flex;align-items:center;gap:4px}
+ .kpi-change.up{color:#059669}
+ .kpi-change.neutral{color:#64748b}
+ .kpi-change.arrow{font-size:11px}
+
+ .performance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:22px}
+ .perf-card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(15,23,42,.04);display:flex;flex-direction:column}
+ .perf-header{background:#0a2342;color:#fff;padding:10px 16px;font-size:12.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+ .perf-header.teal{background:#0f7173}
+ .perf-body{padding:16px 16px 18px;flex:1}
+
+ .financial-wrap{display:flex;gap:16px}
+ .financial-main{flex:1;min-width:0}
+ .chart-block{margin-bottom:16px}
+ .chart-block:last-child{margin-bottom:0}
+ .chart-title{font-size:12px;font-weight:600;color:#475569;margin-bottom:6px}
+ .chart-wrap{height:118px;position:relative}
+ .financial-side{width:142px;flex-shrink:0}
+ .metric-box{border:1px solid #e5e7eb;border-radius:12px;padding:18px 12px;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;background:#fcfdff}
+ .metric-box.icon-circle{margin-bottom:10px;background:#0a2342;width:42px;height:42px}
+ .metric-label{font-size:11px;font-weight:600;color:#475569;line-height:1.3}
+ .metric-value{font-size:28px;font-weight:800;color:#94a3b8;margin-top:8px}
+
+ .funnel{display:flex;flex-direction:column;gap:9px;margin-bottom:18px}
+ .funnel-bar{height:38px;border-radius:8px;display:flex;align-items:center;justify-content:space-between;padding:0 14px;color:#fff;font-weight:600;font-size:13px;box-shadow:inset 0 -1px 0 rgba(0,0,0,.08)}
+ .funnel-bar span:last-child{font-variant-numeric:tabular-nums}
+ .funnel-1{background:#0a2342;width:100%}
+ .funnel-2{background:#153a67;width:88%}
+ .funnel-3{background:#0f7173;width:70%}
+ .funnel-4{background:#2aa1a3;width:52%}
+
+ .commercial-bottom{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+ .mini-card{border:1px solid #e5e7eb;border-radius:12px;padding:12px;background:#fcfdff}
+ .mini-title{font-size:11px;font-weight:600;color:#475569;text-align:center;margin-bottom:6px;line-height:1.25}
+ .donut-wrap{position:relative;width:92px;height:92px;margin:0 auto}
+ .donut-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column}
+ .donut-value{font-size:20px;font-weight:800;color:#0a2342;line-height:1}
+ .donut-delta{font-size:11px;font-weight:700;color:#059669;margin-top:2px}
+ .mini-icon{display:flex;justify-content:center;margin-bottom:8px}
+ .mini-big{font-size:26px;font-weight:800;color:#0a2342;text-align:center;line-height:1;margin-top:4px}
+
+ .project-top{display:flex;gap:16px;align-items:center;margin-bottom:18px}
+ .project-chart{position:relative;width:112px;height:112px;flex-shrink:0}
+ .project-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+ .project-total{font-size:22px;font-weight:800;color:#0a2342;line-height:1}
+ .project-label{font-size:10px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.5px}
+ .legend{flex:1}
+ .legend-item{display:flex;align-items:center;gap:8px;margin-bottom:7px;font-size:12px}
+ .legend-dot{width:10px;height:10px;border-radius:50%}
+ .legend-name{font-weight:600;color:#334155;min-width:70px}
+ .legend-val{color:#64748b}
+ .legend-pct{margin-left:auto;font-weight:700;color:#0f172a}
+
+ .ops-bottom{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+
+ .risk-section{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(15,23,42,.04);margin-bottom:22px}
+ .risk-header{background:#0a2342;color:#fff;padding:11px 16px;font-size:12.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+ .risk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#e2e8f0}
+ .risk-card{background:#fff;padding:16px 18px}
+ .risk-title{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:800;color:#0a2342;text-transform:uppercase;letter-spacing:.4px;margin-bottom:6px}
+ .risk-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+ .risk-dot.yellow{background:#f59e0b}
+ .risk-dot.red{background:#ef4444}
+ .risk-dot.green{background:#10b981}
+ .risk-desc{font-size:13px;color:#475569;line-height:1.45}
+
+ .summary-section{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;box-shadow:0 1px 2px rgba(15,23,42,.04)}
+ .summary-tab{background:#0a2342;color:#fff;display:inline-block;padding:9px 16px;font-size:12.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;border-bottom-right-radius:10px}
+ .summary-body{padding:18px 20px 22px}
+ .summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px}
+ .summary-col h4{font-size:11.5px;font-weight:800;color:#0f7173;letter-spacing:.6px;text-transform:uppercase;margin-bottom:8px}
+ .summary-col p{font-size:13.4px;color:#334155;line-height:1.6}
+
+  @media (max-width:1200px){
+   .kpis{grid-template-columns:repeat(4,1fr)}
+   .performance-grid{grid-template-columns:repeat(2,1fr)}
+   .risk-grid{grid-template-columns:repeat(2,1fr)}
+   .summary-grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:900px){
+   .dashboard{padding:22px 18px}
+   .kpis{grid-template-columns:repeat(2,1fr);gap:12px}
+   .performance-grid{grid-template-columns:1fr}
+   .financial-wrap{flex-direction:column}
+   .financial-side{width:100%}
+   .metric-box{flex-direction:row;justify-content:flex-start;gap:14px;padding:14px 16px}
+   .metric-value{margin-top:0;margin-left:auto}
+   .risk-grid{grid-template-columns:1fr}
+   .summary-grid{grid-template-columns:1fr;gap:18px}
+   .topbar{flex-direction:column;align-items:flex-start;gap:12px}
+  }
+  @media (max-width:600px){
+   .kpis{grid-template-columns:1fr 1fr}
+   .kpi-value{font-size:21px}
+   .commercial-bottom,.ops-bottom{grid-template-columns:1fr}
+   .project-top{flex-direction:column;align-items:flex-start}
+  }
 </style>
 </head>
-<body class="antialiased">
-<div class="min-h-screen">
+<body>
+<div class="dashboard">
+  <header class="topbar">
+    <div class="brand">
+      <h1>MRH GROUP</h1>
+      <div class="sub">WEEKLY EXECUTIVE DASHBOARD</div>
+    </div>
+    <div class="date">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      Week Ending 19 JUNE 2026
+    </div>
+  </header>
 
-<header class="border-b border-white/5 bg-[var(--navy)]/80 sticky top-0 z-40">
-    <div class="max-w-7xl mx-auto px-4 py-5">
-        <div class="flex flex-col sm:flex-row sm:justify-between gap-4">
-            <div>
-                <h1 class="text-xl sm:text-2xl font-bold">MICHELLE REGINATA HOLDINGS LTD | <span class="font-light text-[var(--gold)]">FRIDAY EXECUTIVE BRIEF</span></h1>
-                <p class="text-sm text-[var(--text-muted)] mt-1" id="autoWeekHeader">Loading...</p>
+  <section class="kpis">
+    <div class="kpi">
+      <div class="icon-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M12 1v22M17 5H9.5a3.5 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div class="kpi-label">REVENUE</div>
+      <div class="kpi-value">TZS 1.17M</div>
+      <div class="kpi-change up"><span class="arrow">▲</span>143.8% vs Last Week</div>
+    </div>
+    <div class="kpi">
+      <div class="icon-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M16 12h4M2 10h4"/></svg></div>
+      <div class="kpi-label">COLLECTIONS</div>
+      <div class="kpi-value">N/A</div>
+      <div class="kpi-change neutral">—</div>
+    </div>
+    <div class="kpi">
+      <div class="icon-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 14l3-3 4 4 5-6"/></svg></div>
+      <div class="kpi-label">PIPELINE VALUE</div>
+      <div class="kpi-value">N/A</div>
+      <div class="kpi-change neutral">—</div>
+    </div>
+    <div class="kpi">
+      <div class="icon-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg></div>
+      <div class="kpi-label">NEW OPPORTUNITIES</div>
+      <div class="kpi-value">1</div>
+      <div class="kpi-change neutral">No Change</div>
+    </div>
+    <div class="kpi">
+      <div class="icon-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+      <div class="kpi-label">NEW CLIENTS</div>
+      <div class="kpi-value">N/A</div>
+      <div class="kpi-change neutral">—</div>
+    </div>
+    <div class="kpi">
+      <div class="icon-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+      <div class="kpi-label">PROJECTS ON TRACK</div>
+      <div class="kpi-value">4</div>
+      <div class="kpi-change up"><span class="arrow">▲</span>1</div>
+    </div>
+    <div class="kpi">
+      <div class="icon-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <div class="kpi-label">EMPLOYEE HEADCOUNT</div>
+      <div class="kpi-value">18</div>
+      <div class="kpi-change neutral">No Change</div>
+    </div>
+    <div class="kpi">
+      <div class="icon-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 14l2 2 4-4"/></svg></div>
+      <div class="kpi-label">REPORT COMPLIANCE</div>
+      <div class="kpi-value">100%</div>
+      <div class="kpi-change neutral">No Change</div>
+    </div>
+  </section>
+
+  <section class="performance-grid">
+    <!-- Financial -->
+    <article class="perf-card">
+      <div class="perf-header">FINANCIAL PERFORMANCE</div>
+      <div class="perf-body">
+        <div class="financial-wrap">
+          <div class="financial-main">
+            <div class="chart-block">
+              <div class="chart-title">Revenue Trend</div>
+              <div class="chart-wrap"><canvas id="revenueChart"></canvas></div>
             </div>
-            <div class="text-left sm:text-right">
-                <p class="text-sm font-medium">Prepared by KJ | COO</p>
-                <p class="text-xs text-[var(--text-muted)]">Confidential Executive Brief</p>
+            <div class="chart-block">
+              <div class="chart-title">Collections Trend</div>
+              <div class="chart-wrap"><canvas id="collectionsChart"></canvas></div>
             </div>
-        </div>
-    </div>
-</header>
-
-<main class="max-w-7xl mx-auto px-4 py-8 sm:py-12 space-y-12">
-
-<!-- ===== EXECUTIVE SNAPSHOT - EDIT WEEKLY HERE ===== -->
-<section class="fade-in">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div class="gradient-border rounded-2xl p-6">
-            <h3 class="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-5">Area Status</h3>
-            <div class="space-y-4">
-                <div class="flex items-center justify-between">
-                    <span class="text-sm">Operations</span>
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-2.5 h-2.5 rounded-full" style="background:#22c55e"></span>
-                        <span class="text-xs text-[var(--text-muted)] w-16 text-right">On Track</span>
-                    </div>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm">Finance</span>
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-2.5 h-2.5 rounded-full" style="background:#f59e0b"></span>
-                        <span class="text-xs text-[var(--text-muted)] w-16 text-right">Watch</span>
-                    </div>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm">Legal & Compliance</span>
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-2.5 h-2.5 rounded-full" style="background:#22c55e"></span>
-                        <span class="text-xs text-[var(--text-muted)] w-16 text-right">On Track</span>
-                    </div>
-                </div>
-                <div class="flex items-center justify-between">
-                    <span class="text-sm">Commercial</span>
-                    <div class="flex items-center gap-2.5">
-                        <span class="w-2.5 h-2.5 rounded-full" style="background:#22c55e"></span>
-                        <span class="text-xs text-[var(--text-muted)] w-16 text-right">On Track</span>
-                    </div>
-                </div>
+          </div>
+          <div class="financial-side">
+            <div class="metric-box">
+              <div class="icon-circle"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+              <div class="metric-label">Outstanding<br>Receivables</div>
+              <div class="metric-value">N/A</div>
             </div>
+          </div>
         </div>
+      </div>
+    </article>
 
-        <div class="lg:col-span-2 gradient-border rounded-2xl p-6">
-            <h3 class="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-5">KPIs</h3>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="rounded-xl p-4" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05)">
-                    <p class="text- text-[var(--text-muted)] uppercase tracking-wider mb-1">Revenue</p>
-                    <p class="text-xl font-semibold">$0.0M</p>
-                </div>
-                <div class="rounded-xl p-4" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05)">
-                    <p class="text- text-[var(--text-muted)] uppercase tracking-wider mb-1">Units Sold</p>
-                    <p class="text-xl font-semibold">0</p>
-                </div>
-                <div class="rounded-xl p-4" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05)">
-                    <p class="text- text-[var(--text-muted)] uppercase tracking-wider mb-1">Budget Y/N</p>
-                    <p class="text-xl font-semibold">Y</p>
-                </div>
-                <div class="rounded-xl p-4" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05)">
-                    <p class="text- text-[var(--text-muted)] uppercase tracking-wider mb-1">Audit %</p>
-                    <p class="text-xl font-semibold">0%</p>
-                </div>
-                <div class="rounded-xl p-4" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05)">
-                    <p class="text- text-[var(--text-muted)] uppercase tracking-wider mb-1">Open Compliance</p>
-                    <p class="text-xl font-semibold">0</p>
-                </div>
-                <div class="rounded-xl p-4" style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05)">
-                    <p class="text- text-[var(--text-muted)] uppercase tracking-wider mb-1">Major Projects</p>
-                    <p class="text-xl font-semibold">0/0</p>
-                </div>
+    <!-- Commercial -->
+    <article class="perf-card">
+      <div class="perf-header teal">COMMERCIAL PERFORMANCE</div>
+      <div class="perf-body">
+        <div class="chart-title" style="margin-bottom:10px">Sales Pipeline</div>
+        <div class="funnel">
+          <div class="funnel-bar funnel-1"><span>Prospects</span><span>15.0M</span></div>
+          <div class="funnel-bar funnel-2"><span>Qualified</span><span>7.8M</span></div>
+          <div class="funnel-bar funnel-3"><span>Proposal</span><span>3.2M</span></div>
+          <div class="funnel-bar funnel-4"><span>Negotiation</span><span>1.2M</span></div>
+        </div>
+        <div class="commercial-bottom">
+          <div class="mini-card">
+            <div class="mini-title">Opportunity Conversion Rate</div>
+            <div class="donut-wrap">
+              <canvas id="conversionChart"></canvas>
+              <div class="donut-center">
+                <div class="donut-value">15%</div>
+                <div class="donut-delta">▲2pp</div>
+              </div>
             </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-icon"><div class="icon-circle" style="margin:0;width:36px;height:36px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/></svg></div></div>
+            <div class="mini-title">New Opportunities Created</div>
+            <div class="mini-big">1</div>
+          </div>
         </div>
-    </div>
-</section>
+      </div>
+    </article>
 
-<section class="fade-in">
-    <h2 class="text-lg sm:text-xl font-semibold mb-5">WEEKLY OVERVIEW</h2>
-    <div class="gradient-border rounded-2xl p-6 sm:p-8">
-        <div id="weeklyOverview" class="text-sm sm:text-base leading-8 text-gray-200">Loading...</div>
-    </div>
-</section>
-
-<section class="fade-in">
-    <h2 class="text-lg sm:text-xl font-semibold mb-5">EXECUTIVE DOCUMENTS</h2>
-    <div class="gradient-border rounded-2xl p-6 sm:p-8 text-center">
-        <button onclick="openDocsModal()" class="btn-gold px-8 py-4 rounded-lg font-semibold text-base">
-            View Supporting Documents
-        </button>
-        <p class="text-xs text-[var(--text-muted)] mt-3" id="docCount">Checking for documents...</p>
-    </div>
-</section>
-
-<section class="fade-in">
-    <h2 class="text-lg sm:text-xl font-semibold mb-5">NEXT WEEK PRIORITIES</h2>
-    <div class="gradient-border rounded-2xl p-6 sm:p-8">
-        <div id="nextWeek" class="text-sm sm:text-base leading-8 text-gray-200">Loading...</div>
-    </div>
-</section>
-
-<section class="fade-in">
-    <h2 class="text-lg sm:text-xl font-semibold mb-5">CHAIRMAN DIRECTIVES</h2>
-    <div class="gradient-border rounded-2xl p-6 sm:p-8 space-y-6">
-        <div id="chairmanDirectives" class="text-sm text-gray-300"></div>
-        <form id="directiveForm" action="https://formspree.io/f/xdabloba" method="POST" class="space-y-4">
-            <label for="directive" class="text-sm text-gray-300">Send note directly to COO</label>
-            <textarea id="directive" name="directive" required placeholder="Enter directive..." class="w-full h-40 p-4 rounded-lg bg-[var(--navy-light)] border border-white/10 focus:outline-none focus:ring-2 focus:ring-[var(--gold)] text-sm"></textarea>
-            <button type="submit" class="btn-gold px-6 py-3 rounded-lg font-semibold text-sm">Submit Directive</button>
-        </form>
-        <p id="successMessage" class="hidden text-green-400 text-sm">Thank you, Jesse. I will action accordingly.</p>
-        <p id="errorMessage" class="hidden text-red-400 text-sm">Submission failed. Please try again.</p>
-    </div>
-</section>
-
-</main>
-</div>
-
-<div id="docsModal" class="modal" onclick="closeDocsModal()">
-    <div class="gradient-border rounded-2xl p-6 sm:p-8 max-w-2xl w-full max-h- overflow-y-auto" onclick="event.stopPropagation()">
-        <div class="flex justify-between items-center mb-6">
-            <h3 class="text-xl font-semibold">Supporting Documents</h3>
-            <button onclick="closeDocsModal()" class="text-[var(--text-muted)] hover:text-white text-2xl leading-none">&times;</button>
+    <!-- Operational -->
+    <article class="perf-card">
+      <div class="perf-header">OPERATIONAL PERFORMANCE</div>
+      <div class="perf-body">
+        <div class="project-top">
+          <div class="project-chart">
+            <canvas id="projectChart"></canvas>
+            <div class="project-center">
+              <div class="project-total">6</div>
+              <div class="project-label">Total</div>
+            </div>
+          </div>
+          <div class="legend">
+            <div style="font-size:12px;font-weight:700;color:#0a2342;margin-bottom:6px">Project Status</div>
+            <div class="legend-item"><span class="legend-dot" style="background:#10b981"></span><span class="legend-name">On Track</span><span class="legend-val">4</span><span class="legend-pct">67%</span></div>
+            <div class="legend-item"><span class="legend-dot" style="background:#f59e0b"></span><span class="legend-name">At Risk</span><span class="legend-val">1</span><span class="legend-pct">17%</span></div>
+            <div class="legend-item"><span class="legend-dot" style="background:#ef4444"></span><span class="legend-name">Delayed</span><span class="legend-val">1</span><span class="legend-pct">16%</span></div>
+          </div>
         </div>
-        <div id="modalDocList" class="space-y-3">
-            <p class="text-[var(--text-muted)]">Loading documents...</p>
+        <div class="ops-bottom">
+          <div class="mini-card">
+            <div class="mini-title">Odoo Implementation Status</div>
+            <div class="donut-wrap">
+              <canvas id="odooChart"></canvas>
+              <div class="donut-center"><div class="donut-value" style="font-size:19px">60%</div></div>
+            </div>
+          </div>
+          <div class="mini-card">
+            <div class="mini-icon"><div class="icon-circle" style="margin:0;width:36px;height:36px;background:#0a2342"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg></div></div>
+            <div class="mini-title">Critical Deliverables Completed</div>
+            <div class="mini-big">4 <span style="font-size:13px;color:#059669;font-weight:700;vertical-align:super">▲1</span></div>
+          </div>
         </div>
+      </div>
+    </article>
+  </section>
+
+  <section class="risk-section">
+    <div class="risk-header">EXECUTIVE RISK DASHBOARD</div>
+    <div class="risk-grid">
+      <div class="risk-card">
+        <div class="risk-title"><span class="risk-dot yellow"></span>COMMERCIAL CAPACITY MONITORING</div>
+        <div class="risk-desc">Infrastructure gaps limiting commercial scalability</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-title"><span class="risk-dot red"></span>AUDIT DEPENDENCY REQUIRES ATTENTION</div>
+        <div class="risk-desc">Audit completion critical for compliance and licence</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-title"><span class="risk-dot yellow"></span>FOUNDER DEPENDENCY MONITORING</div>
+        <div class="risk-desc">Key initiatives remain founder-dependent</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-title"><span class="risk-dot green"></span>REPORTING COMPLIANCE STABLE</div>
+        <div class="risk-desc">Reporting submissions 100% compliant</div>
+      </div>
+      <div class="risk-card">
+        <div class="risk-title"><span class="risk-dot yellow"></span>TECHNOLOGY GOVERNANCE MONITORING</div>
+        <div class="risk-desc">Odoo implementation progressing internal configuration</div>
+      </div>
     </div>
+  </section>
+
+  <section class="summary-section">
+    <div class="summary-tab">EXECUTIVE SUMMARY</div>
+    <div class="summary-body">
+      <div class="summary-grid">
+        <div class="summary-col">
+          <h4>FINANCIAL POSITION</h4>
+          <p>Sales increased 144% week-on-week to TZS 1.17M. Audits are nearing completion with tax clearance pending final audit outputs.</p>
+        </div>
+        <div class="summary-col">
+          <h4>COMMERCIAL POSITION</h4>
+          <p>Strong sales momentum driven by repeat customers. Institutional opportunities emerging. Commercial infrastructure remains a constraint.</p>
+        </div>
+        <div class="summary-col">
+          <h4>OPERATIONAL POSITION</h4>
+          <p>Odoo implementation progressing; NHIF approved and advancing. Audit completion and licence renewal remain top operational priorities.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>
 
 <script>
-document.getElementById('autoWeekHeader').textContent = `Jesse Ndambala • Chairman`;
-function loadText(file, id) {
-    fetch(`public/content/${file}?t=${Date.now()}`)
- .then(r => r.ok? r.text() : '')
- .then(t => document.getElementById(id).innerHTML = t.replace(/\n/g, '<br>'))
- .catch(() => document.getElementById(id).innerHTML = 'No content this week.');
-}
-const GITHUB_USER = 'TheHumanLab';
-const GITHUB_REPO = 'Friday_Executive_Report';
-async function loadDocs() {
-    try {
-        const res = await fetch(`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/public/documents`);
-        const files = await res.json();
-       const docs = files.filter(f => ['.pdf','.xlsx','.xls','.docx','.doc','.pptx','.txt','.csv'].some(ext => f.name.toLowerCase().endsWith(ext)));
-document.getElementById('docCount').textContent = docs.length > 0? `${docs.length} document${docs.length > 1? 's' : ''} available` : 'No documents uploaded this week';
-const list = document.getElementById('modalDocList');
-if (docs.length === 0) { list.innerHTML = '<p class="text-[var(--text-muted)] text-center py-8">No documents uploaded this week.</p>'; return; }
-list.innerHTML = docs.map(file => { const name = file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' ').replace(/\b\w/g, l => l.toUpperCase()); return `<a href="${file.download_url}" target="_blank" class="btn-gold px-4 py-3 rounded-lg font-medium text-sm block text-center">${name}</a>`; }).join('');
-    } catch (e) {
-        document.getElementById('docCount').textContent = 'Unable to load documents';
-        document.getElementById('modalDocList').innerHTML = '<p class="text-red-400 text-center py-8">Error loading documents. Check if repo is public.</p>';
+Chart.defaults.font.family = "'Inter', system-ui, sans-serif";
+Chart.defaults.color = '#64748b';
+
+const revenueCtx = document.getElementById('revenueChart');
+new Chart(revenueCtx, {
+  type: 'line',
+  data: {
+    labels: ['May Wk 3','May Wk 4','Jun Wk 1','Jun Wk 2'],
+    datasets: [{
+      data: [0.42,0.39,0.48,1.17],
+      borderColor: '#0a2342',
+      backgroundColor: 'rgba(10,35,66,0.07)',
+      borderWidth: 2.5,
+      tension: 0.38,
+      pointRadius:,
+      pointHoverRadius: 5,
+      pointBackgroundColor: '#0a2342',
+      pointBorderColor: '#fff',
+      pointBorderWidth: 2,
+      fill: true
+    }]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: {display:false}, tooltip:{enabled:false} },
+    scales: {
+      y: { beginAtZero:true, max:1.3, ticks:{font:{size:10}, color:'#94a3b8', padding:4}, grid:{color:'#f1f5f9', drawBorder:false}, border:{display:false} },
+      x: { ticks:{font:{size:10}, color:'#64748b'}, grid:{display:false}, border:{display:false} }
     }
-}
-function openDocsModal() { document.getElementById('docsModal').classList.add('show'); }
-function closeDocsModal() { document.getElementById('docsModal').classList.remove('show'); }
-document.getElementById("directiveForm").addEventListener("submit", async function(e) {
-    e.preventDefault(); const form = e.target;
-    document.getElementById("successMessage").classList.add("hidden");
-    document.getElementById("errorMessage").classList.add("hidden");
-    try { const res = await fetch(form.action, { method: "POST", body: new FormData(form), headers: { "Accept": "application/json" }}); if (res.ok) { form.reset(); document.getElementById("successMessage").classList.remove("hidden"); } else { throw new Error(); } } catch { document.getElementById("errorMessage").classList.remove("hidden"); }
+  },
+  plugins: [{
+    id:'val',
+    afterDatasetsDraw(c){
+      const {ctx,chartArea}=c; const m=c.getDatasetMeta(0); const p=m.data;
+      ctx.save(); ctx.font='700 11px Inter'; ctx.fillStyle='#0a2342'; ctx.textAlign='center';
+      ctx.fillText('1.17M', p.x, p.y-12); ctx.restore();
+    }
+  }]
+});[3][5]
+
+const collCtx = document.getElementById('collectionsChart');
+new Chart(collCtx, {
+  type:'line',
+  data:{labels:['May Wk 3','May Wk 4','Jun Wk 1','Jun Wk 2'], datasets:[{data:[0.6,0.6], borderColor:'#94a3b8', borderWidth:2, borderDash:, tension:0, pointRadius:0}]},
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{enabled:false}},
+    scales:{
+      y:{min:0,max:1, ticks:{callback:()=>'N/A', font:{size:10}, color:'#94a3b8', stepSize:0.5}, grid:{color:'#f1f5f9',drawBorder:false}, border:{display:false}},
+      x:{ticks:{font:{size:10},color:'#64748b'}, grid:{display:false}, border:{display:false}}
+    }
+  }
+});[5]
+
+new Chart(document.getElementById('conversionChart'),{
+  type:'doughnut',
+  data:{datasets:[{data:, backgroundColor:['#0f7173','#e5e7eb'], borderWidth:0, cutout:'78%', rotation:-90}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}}}
+});[15][85]
+
+new Chart(document.getElementById('projectChart'),{
+  type:'doughnut',
+  data:{datasets:[{data:, backgroundColor:['#10b981','#f59e0b','#ef4444'], borderWidth:2, borderColor:'#fff', cutout:'68%'}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}}}
+});[4][1]
+
+new Chart(document.getElementById('odooChart'),{
+  type:'doughnut',
+  data:{datasets:[{data:, backgroundColor:['#0a2342','#e5e7eb'], borderWidth:0, cutout:'78%', rotation:-90}]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{enabled:false}}}
 });
-loadText('weeklyOverview.txt', 'weeklyOverview');
-loadText('nextweekPriorities.txt', 'nextWeek');
-loadText('chairmanDirectives.txt', 'chairmanDirectives');
-loadDocs();
 </script>
 </body>
-</html>
+</html>[60][40]
