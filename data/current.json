@@ -1,117 +1,33 @@
 {
-  "weekEnding": "26 JUNE 2026",
-  "kpis": [
-    {
-      "label": "REVENUE",
-      "value": "TZS 1.45M",
-      "change": "▲ 24%",
-      "changeType": "positive"
-    },
-    {
-      "label": "COLLECTIONS",
-      "value": "N/A",
-      "change": "—",
-      "changeType": "neutral"
-    },
-    {
-      "label": "PIPELINE VALUE",
-      "value": "N/A",
-      "change": "—",
-      "changeType": "neutral"
-    },
-    {
-      "label": "NEW OPPORTUNITIES",
-      "value": "1",
-      "change": "No Change",
-      "changeType": "neutral"
-    },
-    {
-      "label": "NEW CLIENTS",
-      "value": "N/A",
-      "change": "—",
-      "changeType": "neutral"
-    },
-    {
-      "label": "PROJECTS ON TRACK",
-      "value": "4",
-      "change": "▲ 1",
-      "changeType": "positive"
-    },
-    {
-      "label": "EMPLOYEE HEADCOUNT",
-      "value": "18",
-      "change": "No Change",
-      "changeType": "neutral"
-    },
-    {
-      "label": "REPORT COMPLIANCE",
-      "value": "100%",
-      "change": "No Change",
-      "changeType": "neutral"
-    }
-  ],
-  "revenueTrend": {
-    "labels": ["May Wk 3", "May Wk 4", "Jun Wk 1", "Jun Wk 2"],
-    "data": [0.42, 0.39, 0.48, 1.45]
+  "week": "26 JUNE 2026",
+  "finance": {
+    "kpi": "TZS 1.45M",
+    "change": "+24%",
+    "status": "up",
+    "note": "Revenue beat forecast. Collections TZS 890K."
   },
-  "collectionsTrend": {
-    "labels": ["May Wk 3", "May Wk 4", "Jun Wk 1", "Jun Wk 2"],
-    "data": [0.6, 0.6, 0.6, 0.6]
+  "commercial": {
+    "kpi": "TZS 27.2M pipeline",
+    "change": "+3 new",
+    "status": "up",
+    "note": "3 proposals in negotiation"
   },
-  "outstandingReceivables": "N/A",
-  "pipeline": {
-    "prospects": 15.0,
-    "qualified": 7.8,
-    "proposal": 3.2,
-    "negotiation": 1.2
+  "legal": {
+    "kpi": "Audit 90%",
+    "change": "On track",
+    "status": "neutral",
+    "note": "Tax clearance pending"
   },
-  "conversionRate": 15,
-  "conversionChange": 2,
-  "newOpportunities": 1,
-  "projectStatus": {
-    "onTrack": 4,
-    "atRisk": 1,
-    "delayed": 1,
-    "total": 6
+  "operations": {
+    "kpi": "4/6 projects",
+    "change": "67% on track",
+    "status": "neutral",
+    "note": "Odoo at 60%"
   },
-  "odooPercent": 60,
-  "deliverables": 4,
-  "deliverablesChange": 1,
-  "risks": [
-    {
-      "title": "COMMERCIAL CAPACITY",
-      "status": "MONITORING",
-      "level": "yellow",
-      "desc": "Infrastructure gaps limiting commercial scalability"
-    },
-    {
-      "title": "AUDIT DEPENDENCY",
-      "status": "REQUIRES ATTENTION",
-      "level": "red",
-      "desc": "Audit completion critical for compliance and licence"
-    },
-    {
-      "title": "FOUNDER DEPENDENCY",
-      "status": "MONITORING",
-      "level": "yellow",
-      "desc": "Key initiatives remain founder-dependent"
-    },
-    {
-      "title": "REPORTING COMPLIANCE",
-      "status": "STABLE",
-      "level": "green",
-      "desc": "Reporting submissions 100% compliant"
-    },
-    {
-      "title": "TECHNOLOGY GOVERNANCE",
-      "status": "MONITORING",
-      "level": "yellow",
-      "desc": "Odoo implementation progressing internal configuration"
-    }
-  ],
-  "summary": {
-    "financial": "Revenue grew to TZS 1.45M (+24% WoW). Collections steady. Audit nearing completion.",
-    "commercial": "Strong sales momentum driven by repeat customers. Institutional opportunities emerging. Commercial infrastructure remains a constraint.",
-    "operational": "Odoo implementation progressing; NHIF approved and advancing. Audit completion and licence renewal remain top operational priorities."
+  "ceo": {
+    "kpi": "2 decisions",
+    "change": "Urgent",
+    "status": "down",
+    "note": "Licence renewal + hire approval"
   }
 }
